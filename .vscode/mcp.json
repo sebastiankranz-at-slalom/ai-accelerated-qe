@@ -1,0 +1,39 @@
+{
+    // 💡 Inputs are prompted on first server start, then stored securely by VS Code.
+    "inputs": [
+      {
+        "type": "promptString",
+        "id": "github_token",
+        "description": "GitHub Personal Access Token",
+        "password": true
+      }
+    ],
+    "servers": {
+      "playwright": {
+        "command": "docker",
+        "args": ["run", "-i", "--rm", "--init", "mcp/playwright"]
+        },
+      "mcp-atlassian": {
+        "command": "docker",
+        "args": [
+            "run",
+            "-i",
+            "--rm",
+            "--env-file",
+            "${workspaceFolder}/.env",
+            "ghcr.io/sooperset/mcp-atlassian:latest"
+        ]
+      },
+      "github": {
+        "command": "docker",
+        "args": [
+          "run",
+          "-i",
+          "--rm",
+          "--env-file",
+            "${workspaceFolder}/.env",
+          "ghcr.io/github/github-mcp-server"
+        ]
+      }
+    }
+}
